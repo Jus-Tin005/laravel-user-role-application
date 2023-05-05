@@ -27,7 +27,7 @@
                 </a>
                 <div class="dropdown-items mb-1 hidden">
                     @can('access')
-                        <a class="nav-link{{ request()->is('admin/features*') ? ' active' : '' }}" href="{{ route('admin.features.index') }}">
+                        <a class="nav-link" href="#">
                             <i class="fas fa-users">
 
                             </i>
