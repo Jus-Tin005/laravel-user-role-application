@@ -26,7 +26,7 @@
                         {{ trans('cruds.role.fields.title') }}
                     </th>
                     <td>
-                        {{ $role->title }}
+                        {{ $role->name }}
                     </td>
                 </tr>
                 <tr>

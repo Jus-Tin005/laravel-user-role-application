@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('permissions', function (Blueprint $table) {
-            $table->increments('id');
+            $table->increments('id')->nullable();
             $table->string('title')->nullable();
             $table->timestamps();
             $table->softDeletes();

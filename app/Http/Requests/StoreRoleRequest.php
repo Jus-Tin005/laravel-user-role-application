@@ -19,11 +19,10 @@ class StoreRoleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title'         => [
+            'name' => [
                 'string',
                 'required',
             ],
-           
             'permissions.*' => [
                 'integer',
             ],
@@ -31,6 +30,7 @@ class StoreRoleRequest extends FormRequest
                 'required',
                 'array',
             ],
+           
         ];
     }
 }

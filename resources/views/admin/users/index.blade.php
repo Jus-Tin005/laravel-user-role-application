@@ -60,7 +60,7 @@
                             </td>
                             <td>
                                 @foreach($user->roles as $key => $item)
-                                    <span class="badge blue">{{ $item->title }}</span>
+                                    <span class="badge blue">{{ $item->name }}</span>
                                 @endforeach
                             </td>
                             <td>

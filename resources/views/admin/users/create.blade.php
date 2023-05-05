@@ -42,9 +42,9 @@
                 <span class="block">{{ trans('cruds.user.fields.password_helper') }}</span>
             </div>
             <div class="mb-3">
-                <label>{{ trans('cruds.user.fields.roles') }} <br>
+                <label>{{ trans('cruds.user.fields.roles') }} <label class="text-xs required"></label> <br>
                     @foreach($roles as $id => $roles)
-                        <input type="checkbox" name="roles[]" value="{{ $id }}" id="roles" class="form-control {{ $errors->has('roles') ? ' is-invalid' : '' }}" {{ in_array($id, old('roles', [])) ? 'checked' : '' }}> {{ $roles }}
+                        <input type="checkbox" name="roles[]" value="{{ $id }}" id="roles" class="form-control {{ $errors->has('roles') ? ' is-invalid' : '' }}" {{ in_array($id, old('roles', [])) ? 'checked' : '' }}> {{ $roles }} &nbsp;&nbsp;
                     @endforeach
                 </label>
                 @if($errors->has('roles'))

@@ -7,6 +7,8 @@ use Gate;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Response;
 
+
+
 class StoreFeatureRequest extends FormRequest
 {
     public function authorize()
@@ -23,6 +25,16 @@ class StoreFeatureRequest extends FormRequest
                 'string',
                 'required',
             ],
+            
+            'permissions.*' => [
+                'integer',
+            ],
+            'permissions'   => [
+                'required',
+                'array',
+            ],
         ];
     }
+   
 }
+
