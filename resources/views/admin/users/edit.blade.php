@@ -45,7 +45,7 @@
             <div class="mb-3">
                 <label>{{ trans('cruds.user.fields.roles') }} <label class="text-xs required"></label><br>
                     @foreach($roles as $id => $roles)
-                        <input type="checkbox" name="roles[]" value="{{ $id }}" id="roles" class="form-control {{ $errors->has('roles') ? ' is-invalid' : '' }}" {{ (in_array($id, old('roles', [])) || $user->roles->contains($id)) ? 'checked' : '' }}> {{ $roles }} &nbsp;&nbsp;
+                        <input type="radio" name="roles[]" value="{{ $id }}" id="roles" class="form-control {{ $errors->has('roles') ? ' is-invalid' : '' }}" {{ (in_array($id, old('roles', [])) || $user->roles->contains($id)) ? 'checked' : '' }}> {{ $roles }} &nbsp;&nbsp;
                     @endforeach
                 </label>
                 @if($errors->has('roles'))

@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('role_user', function (Blueprint $table) {
-            $table->unsignedInteger('role_id');
+            $table->unsignedInteger('role_id')->nullable();
             $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
            
         });

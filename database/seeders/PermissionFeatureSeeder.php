@@ -17,19 +17,19 @@ class PermissionFeatureSeeder extends Seeder
      */
     public function run()
     {
-        $admin_permissions = Permission::offset(0)->limit(4)->get();
+        $admin_permissions = Permission::all();
         Feature::findOrFail(1)->permissions()->sync($admin_permissions->pluck('id'));
 
-        $admin_permissions = Permission::offset(0)->limit(5)->get();
+        $admin_permissions = Permission::all();
         Feature::findOrFail(2)->permissions()->sync($admin_permissions->pluck('id')); 
         
-        $admin_permissions = Permission::offset(1)->limit(3)->get();
+        $admin_permissions = Permission::all();
         Feature::findOrFail(3)->permissions()->sync($admin_permissions->pluck('id'));
 
-        $admin_permissions = Permission::offset(3)->limit(1)->get();
+        $admin_permissions = Permission::all();
         Feature::findOrFail(4)->permissions()->sync($admin_permissions->pluck('id'));
 
-        $admin_permissions = Permission::offset(1)->limit(3)->get();
+        $admin_permissions = Permission::all();
         Feature::findOrFail(5)->permissions()->sync($admin_permissions->pluck('id'));
     }
 }

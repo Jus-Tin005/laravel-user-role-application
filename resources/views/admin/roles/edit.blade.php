@@ -22,9 +22,15 @@
             </div>
             <div class="mb-3">
                 <label>{{ trans('cruds.role.fields.permissions') }}<label class="text-xs required"></label> <br>
-                    @foreach($permissions as $id => $permissions)
-                        <input type="checkbox" name="permissions[]" value="{{ $id }}" id="permissions" class="form-control {{ $errors->has('permissions') ? ' is-invalid' : '' }}" {{ (in_array($id, old('permissions', [])) || $role->permissions->contains($id)) ? 'checked' : '' }}> {{ $permissions }}
-                    @endforeach
+
+                @foreach($features as $key => $feature)
+                        <div class="mb-3"> <strong>{{$feature->name}}</strong> &nbsp;&nbsp;
+                                @foreach($feature->permissions as $id => $permissions)
+                                    <input type="checkbox" name="permissions[]" value="{{  $permissions->id }}" id="permissions" class="form-control {{ $errors->has('permissions') ? ' is-invalid' : '' }}" {{ in_array( $permissions->id, old('permissions', [])) || $role->permissions->contains( $permissions->id) ? 'checked' : ''  }}> {{ $permissions->title }} &nbsp;&nbsp;
+                                @endforeach
+                        </div>
+                @endforeach
+
                 </label>
                 @if($errors->has('permissions'))
                     <p class="invalid-feedback">{{ $errors->first('permissions') }}</p>
