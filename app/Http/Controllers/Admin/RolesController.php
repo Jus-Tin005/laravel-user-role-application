@@ -8,6 +8,7 @@ use App\Http\Requests\StoreRoleRequest;
 use App\Http\Requests\UpdateRoleRequest;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Models\PermissionRole;
 use App\Models\Feature;
 use Gate;
 use Illuminate\Http\Request;
@@ -28,8 +29,9 @@ class RolesController extends Controller
         abort_if(Gate::denies('create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $features = Feature::all();
-        $permissions = Permission::all()->pluck('title', 'id');
+        $permissions = Permission::all();
         return view('admin.roles.create', compact('permissions','features'));
+
     }
 
     public function store(StoreRoleRequest $request)
@@ -46,10 +48,8 @@ class RolesController extends Controller
         abort_if(Gate::denies('edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $features = Feature::all();
-        $permissions = Permission::all()->pluck('title', 'id');
+        $permissions = Permission::findOrFail($role->id)->get();
         $role->load('permissions');
-    
-       
         return view('admin.roles.edit', compact('features','permissions', 'role'));
     }
 

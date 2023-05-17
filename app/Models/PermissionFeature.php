@@ -9,7 +9,7 @@ class PermissionFeature extends Model
 {
     use HasFactory;
 
-    public $table = 'permission_feature';
+    // public $table = 'permission_feature';
 
-    protected $fillable = ['permission_id','feature_id'];
+    // protected $fillable = ['permission_id','feature_id'];
 }

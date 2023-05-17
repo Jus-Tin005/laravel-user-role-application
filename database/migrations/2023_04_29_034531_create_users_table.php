@@ -17,8 +17,8 @@ return new class extends Migration
             $table->increments('id')->nullable();
             $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->datetime('email_verified_at')->nullable();
             $table->string('password');
+            $table->datetime('email_verified_at')->nullable();
             $table->string('remember_token')->nullable();
             $table->timestamps();
             $table->softDeletes();

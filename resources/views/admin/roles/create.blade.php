@@ -9,7 +9,7 @@
         @csrf
         <div class="body">
             <div class="mb-3">
-                <label for="name" class="text-xs required">{{ trans('cruds.role.fields.title') }}</label>
+                <label for="username" class="text-xs required">{{ trans('cruds.role.fields.title') }}</label>
                 <div class="form-group">
                     <input type="text" id="name" name="name" class="{{ $errors->has('name') ? ' is-invalid' : '' }}" value="{{ old('name') }}" required>
                 </div>
@@ -24,8 +24,10 @@
                
                 @foreach($features as $id => $feature)
                         <div class="mb-3"> <strong>{{$feature->name}}</strong> &nbsp;&nbsp;
-                                @foreach($feature->permissions as  $permissions)
-                                    <input type="checkbox" name="permissions[]" value="{{ $permissions->id }}" id="permissions" class="form-control {{ $errors->has('permissions') ? ' is-invalid' : '' }}" {{ in_array($permissions->id, old('permissions', [])) ? 'checked' : '' }}> {{ $permissions->title }} &nbsp;&nbsp;
+                                @foreach($permissions as $permission)
+                                   @if($feature->id === $permission->feature_id)
+                                        <input type="checkbox" name="permissions[]" value="{{$permission->id}}"  class="form-control {{ $errors->has('permissions') ? ' is-invalid' : '' }}"> {{ $permission->title }} &nbsp;&nbsp;
+                                   @endif
                                 @endforeach
                         </div>
                 @endforeach

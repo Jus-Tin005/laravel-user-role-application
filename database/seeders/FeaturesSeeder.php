@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Feature;
+use App\Models\Permission;
 
 
 class FeaturesSeeder extends Seeder
@@ -16,29 +17,19 @@ class FeaturesSeeder extends Seeder
      */
     public function run()
     {
-        $features = [
-            [
-                'id' => 1,
-                'name' => 'user',
-            ],
-            [
-                'id' => 2,
-                'name' => 'role',
-            ],
-            [
-                'id' => 3,
-                'name' => 'product',
-            ],
-            [
-                'id' => 4,
-                'name' => 'customer',
-            ],
-            [
-                'id' => 5,
-                'name' => 'sales',
-            ],
-        ];
+        $features = ['user','role','product','customer','sale'];
+        $permissions = ['access','create','edit','show','delete'];
 
-        Feature::insert($features);
+        foreach($features as $feature){
+            $feature_id = Feature::create(['name' => $feature]);
+
+            foreach($permissions as $permission){
+               Permission::create([
+                'title' => $permission,
+                'feature_id' => $feature_id->id
+               ]);
+            }
+        }
+
     }
 }

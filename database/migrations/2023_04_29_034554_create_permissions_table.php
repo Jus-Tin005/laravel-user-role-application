@@ -14,8 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('permissions', function (Blueprint $table) {
-            $table->increments('id')->nullable();
+            $table->increments('id');
             $table->string('title')->nullable();
+            $table->unsignedInteger('feature_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -29,5 +30,6 @@ return new class extends Migration
     public function down()
     {
         Schema::dropIfExists('permissions');
+       
     }
 };

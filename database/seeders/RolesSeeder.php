@@ -15,30 +15,10 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-        $roles = [
-            [
-                'id'    => 1,
-                'name' => 'Super Admin',
-            ],
-            [
-                'id'    => 2,
-                'name' => 'Admin',
-            ],
-           
-            [
-                'id'    => 3,
-                'name' => 'Accountant',
-            ],
-            [
-                'id'    => 4,
-                'name' => 'Cashier',
-            ],
-            [
-                'id'    => 5,
-                'name' => 'Manager',
-            ],
-        ];
+        $roles = ['Super Admin','Admin','Accountant','Cashier','Manager'];
 
-        Role::insert($roles);
+                 foreach($roles as  $role){
+                            Role::create(['name' => $role]);    
+                     }
     }
 }

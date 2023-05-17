@@ -25,9 +25,11 @@
 
                 @foreach($features as $key => $feature)
                         <div class="mb-3"> <strong>{{$feature->name}}</strong> &nbsp;&nbsp;
-                                @foreach($feature->permissions as $id => $permissions)
-                                    <input type="checkbox" name="permissions[]" value="{{  $permissions->id }}" id="permissions" class="form-control {{ $errors->has('permissions') ? ' is-invalid' : '' }}" {{ in_array( $permissions->id, old('permissions', [])) || $role->permissions->contains( $permissions->id) ? 'checked' : ''  }}> {{ $permissions->title }} &nbsp;&nbsp;
-                                @endforeach
+                            @foreach($permissions as $id => $permission)
+                                    @if($feature->id === $permission->feature_id)
+                                        <input type="checkbox" name="permissions[]" value="{{$permission->id}}"  class="form-control {{ $errors->has('permissions') ? ' is-invalid' : '' }}" {{ in_array( $permission->id, old('permissions', [])) || $role->permissions->contains( $permission->id) ? 'checked' : ''  }}> {{ $permission->title }} &nbsp;&nbsp;
+                                    @endif
+                            @endforeach
                         </div>
                 @endforeach
 
