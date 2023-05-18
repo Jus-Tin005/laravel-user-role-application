@@ -20,16 +20,19 @@
             </div>
             
             <div class="mb-3">
-                <label>{{ trans('cruds.role.fields.permissions') }}<label class="text-xs required"></label> <br>
+                <label for="role_per">{{ trans('cruds.role.fields.permissions') }}<label class="text-xs required"></label> <br>
                
                 @foreach($features as $id => $feature)
                         <div class="mb-3"> <strong>{{$feature->name}}</strong> &nbsp;&nbsp;
-                                @foreach($permissions as $permission)
+                                @foreach($permissions as $key => $permission)
+                                <label for="role_per_in">
                                    @if($feature->id === $permission->feature_id)
                                         <input type="checkbox" name="permissions[]" value="{{$permission->id}}"  class="form-control {{ $errors->has('permissions') ? ' is-invalid' : '' }}"> {{ $permission->title }} &nbsp;&nbsp;
                                    @endif
+                                </label>
                                 @endforeach
                         </div>
+               
                 @endforeach
 
                 </label>
