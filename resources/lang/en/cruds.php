@@ -27,7 +27,8 @@ return [
         'fields'         => [
             'id'                 => 'ID',
             'id_helper'          => '',
-            'title'              => 'Title',
+            'title'              => 'Roles',
+            'action'              => 'Actions',
             'title_helper'       => '',
             'permissions'        => 'Permissions',
             'permissions_helper' => '',

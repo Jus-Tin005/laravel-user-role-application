@@ -17,8 +17,8 @@ return new class extends Migration
             $table->increments('id');
             $table->unsignedInteger('role_id')->nullable();
             $table->unsignedInteger('user_id')->nullable();
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            // $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
            
         });
     }

@@ -8,69 +8,155 @@
     </div>
     <nav class="mt-4">
         <a class="nav-link{{ request()->is('admin') ? ' active' : '' }}" href="{{ route('admin.home') }}">
-            <i class="fas fa-fw fa-tachometer-alt">
-
-            </i>
-
+            <i class="fas fa-fw fa-tachometer-alt"></i>
             <span class="mx-4">Dashboard</span>
         </a>
 
-        @can('access')
+
+      
+        
+        @if(auth()->check() && auth()->user()->can('has-role', 'Super Admin'))
             <div class="nav-dropdown">
                 <a class="nav-link" href="#">
-                    <i class="fa-fw fas fa-users">
-
-                    </i>
-
+                    <i class="fa-fw fas fa-users"></i>
                     <span class="mx-4">{{ trans('cruds.userManagement.title') }}</span>
                     <i class="fa fa-caret-down ml-auto" aria-hidden="true"></i>
                 </a>
                 <div class="dropdown-items mb-1 hidden">
-                    @can('access')
+                @can('access','feature')
                         <a class="nav-link" href="#">
-                            <i class="fas fa-users">
-
-                            </i>
-
+                            <i class="fas fa-users"></i>
                             <span class="mx-4">{{ trans('cruds.feature.title') }}</span>
                         </a>
-                    @endcan
-                    @can('access')
+                @endcan
+
+                @can('access','role')
                         <a class="nav-link{{ request()->is('admin/roles*') ? ' active' : '' }}" href="{{ route('admin.roles.index') }}">
-                            <i class="fa-fw fas fa-briefcase">
+                            <i class="fa-fw fas fa-briefcase"></i>
+                            <span class="mx-4">{{ trans('cruds.role.title') }}</span>
+                        </a>
+                @endcan
+                   
+                @can('access','user')
+                        <a class="nav-link{{ request()->is('admin/users*') ? ' active' : '' }}" href="{{ route('admin.users.index') }}">
+                            <i class="fa-fw fas fa-user"></i>
+                            <span class="mx-4">{{ trans('cruds.user.title') }}</span>
+                        </a>
+                @endcan
+                    
+                </div>
+            </div>
+        
 
-                            </i>
 
+        @elseif(auth()->check() && auth()->user()->can('has-role', 'Admin'))
+            <div class="nav-dropdown">
+                    <a class="nav-link" href="#">
+                        <i class="fa-fw fas fa-users"></i>
+                        <span class="mx-4">{{ trans('cruds.userManagement.title') }}</span>
+                        <i class="fa fa-caret-down ml-auto" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-items mb-1 hidden">
+                    @can('access','role')
+                        <a class="nav-link{{ request()->is('admin/roles*') ? ' active' : '' }}" href="{{ route('admin.roles.index') }}">
+                            <i class="fa-fw fas fa-briefcase"></i>
                             <span class="mx-4">{{ trans('cruds.role.title') }}</span>
                         </a>
                     @endcan
-                    @can('access')
+
+                    @can('access','user')
+                            <a class="nav-link{{ request()->is('admin/users*') ? ' active' : '' }}" href="{{ route('admin.users.index') }}">
+                                <i class="fa-fw fas fa-user"></i>
+                                <span class="mx-4">{{ trans('cruds.user.title') }}</span>
+                            </a>
+                    @endcan  
+                    </div>
+            </div>
+
+        
+        @elseif(auth()->check() && auth()->user()->can('has-role', 'Accountant'))
+        <div class="nav-dropdown">
+                    <a class="nav-link" href="#">
+                        <i class="fa-fw fas fa-users"></i>
+                        <span class="mx-4">{{ trans('cruds.userManagement.title') }}</span>
+                        <i class="fa fa-caret-down ml-auto" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-items mb-1 hidden">
+                    @can('access','feature')
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-users"></i>
+                                <span class="mx-4">{{ trans('cruds.feature.title') }}</span>
+                            </a>
+                    @endcan
+
+                    @can('access','user')
+                            <a class="nav-link{{ request()->is('admin/users*') ? ' active' : '' }}" href="{{ route('admin.users.index') }}">
+                                <i class="fa-fw fas fa-user"></i>
+                                <span class="mx-4">{{ trans('cruds.user.title') }}</span>
+                            </a>
+                    @endcan
+                        
+                    </div>
+            </div>
+        
+
+        @php
+            $user = auth()->user();
+            $allowedPermissions = ['access', 'create', 'edit', 'show', 'delete'];
+            $hasPermission = false;
+        @endphp
+
+
+        @if (auth()->check())
+            @foreach ($user->roles as $role)
+                @foreach ($role->permissions as $permission)
+                    @if (in_array($permission->title, $allowedPermissions))
+                        @php
+                            $hasPermission = true;
+                            break 2; 
+                        @endphp
+                    @endif
+                @endforeach
+            @endforeach
+        @endif
+    
+
+        @elseif ($hasPermission)
+            <div class="nav-dropdown">
+                <a class="nav-link" href="#">
+                    <i class="fa-fw fas fa-users"></i>
+                    <span class="mx-4">{{ trans('cruds.userManagement.title') }}</span>
+                    <i class="fa fa-caret-down ml-auto" aria-hidden="true"></i>
+                </a>
+                <div class="dropdown-items mb-1 hidden">
+                    @if (in_array('access', $allowedPermissions))
                         <a class="nav-link{{ request()->is('admin/users*') ? ' active' : '' }}" href="{{ route('admin.users.index') }}">
-                            <i class="fa-fw fas fa-user">
-
-                            </i>
-
+                            <i class="fa-fw fas fa-user"></i>
                             <span class="mx-4">{{ trans('cruds.user.title') }}</span>
                         </a>
-                    @endcan
+                    @endif
+
+                    @if (in_array('create', $allowedPermissions))
+                        <a class="nav-link{{ request()->is('admin/roles*') ? ' active' : '' }}" href="{{ route('admin.roles.index') }}">
+                            <i class="fa-fw fas fa-briefcase"></i>
+                            <span class="mx-4">{{ trans('cruds.role.title') }}</span>
+                        </a>
+                    @endif               
                 </div>
             </div>
-        @endcan
+        @endif
+      
+        
+        
        
         @if(file_exists(app_path('Http/Controllers/Auth/ChangePasswordController.php')))
             <a class="nav-link{{ request()->is('profile/password') ? ' active' : '' }}" href="{{ route('profile.password.edit') }}">
-                <i class="fa-fw fas fa-key">
-
-                </i>
-
+                <i class="fa-fw fas fa-key"></i>
                 <span class="mx-4">{{ trans('global.change_password') }}</span>
             </a>
         @endif
         <a class="nav-link" href="#" onclick="event.preventDefault(); document.getElementById('logoutform').submit();">
-            <i class="fa-fw fas fa-sign-out-alt">
-
-            </i>
-
+            <i class="fa-fw fas fa-sign-out-alt"></i>
             <span class="mx-4">{{ trans('global.logout') }}</span>
         </a>
     </nav>

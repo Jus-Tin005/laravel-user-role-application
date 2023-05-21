@@ -18,8 +18,8 @@ return new class extends Migration
                 $table->increments('id');
                 $table->unsignedInteger('permission_id')->nullable();
                 $table->unsignedInteger('role_id')->nullable();
-                $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade'); 
-                $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+                // $table->foreign('permission_id')->references('id')->on('permissions')->onDelete('cascade'); 
+                // $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
                 $table->timestamps();
         });
         Schema::enableForeignKeyConstraints();

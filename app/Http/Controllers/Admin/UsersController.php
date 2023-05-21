@@ -8,6 +8,8 @@ use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Permission;
+use App\Models\Feature;
 use Gate;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,8 +21,9 @@ class UsersController extends Controller
         abort_if(Gate::denies('access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $users = User::all();
-        return view('admin.users.index', compact('users'));
+        return view('admin.users.index', compact('users'));  
     }
+
 
     public function create()
     {

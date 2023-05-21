@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
+use Illuminate\Http\Request;
+use App\Models\Permission;
+use App\Models\Feature;
 
 class HomeController
 {
@@ -8,4 +11,6 @@ class HomeController
     {
         return view('home');
     }
+
+   
 }

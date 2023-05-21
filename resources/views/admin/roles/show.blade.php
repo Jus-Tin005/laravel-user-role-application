@@ -29,16 +29,6 @@
                         {{ $role->name }}
                     </td>
                 </tr>
-                <tr>
-                    <th>
-                        {{ trans('cruds.role.fields.permissions') }}
-                    </th>
-                    <td>
-                        @foreach($role->permissions as $key => $permissions)
-                            <span class="label label-info">{{ $permissions->title }}</span>
-                        @endforeach
-                    </td>
-                </tr>
             </tbody>
         </table>
         <div class="block pt-4">

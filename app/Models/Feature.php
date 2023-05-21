@@ -30,8 +30,15 @@ class Feature extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    
+
     public function permissions()
     {
-        return $this->belongsToMany(Permission::class,'permission_feature');
+        return $this->hasMany(Permission::class);
     }
+
+    public function hasFeature($permission){
+        return $this->permission->contains('title',$permission);
+    }
+ 
 }

@@ -29,8 +29,14 @@ class Role extends Model
         return $date->format('Y-m-d H:i:s');
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function permissions()
     {
         return $this->belongsToMany(Permission::class,'permission_role');
     }
+
 }

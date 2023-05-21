@@ -11,6 +11,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use \DateTimeInterface;
 
+use App\Models\Permission;
+
+
+
 class User extends Authenticatable
 {
     use SoftDeletes, Notifiable, HasApiTokens;
@@ -77,4 +81,11 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Role::class);
     }
+
+    public function hasRole($role)
+    {
+        return $this->roles->contains('name', $role);
+    }
+
+
 }
