@@ -19,7 +19,9 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        // 'App\Models\Model' => 'App\Policies\ModelPolicy',
+        // 'App\Models\Role' => 'App\Policies\RolePolicy',
+
+        // Role::class => RolePolicy::class,
     ];
 
     /**
@@ -31,21 +33,21 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('has-role', function (User $user, $role) {
-            return $user->hasRole($role);
-        });
+        // Gate::define('has-role', function (User $user, $role) {
+        //     return $user->hasRole($role);
+        // });
 
-        $features = Feature::with('permissions')->get();
+        // $features = Feature::with('permissions')->get();
 
-        foreach ($features as $feature) {
-            foreach ($feature->permissions as $permission) {
-                Gate::define($permission->title, function ($user) use ($permission) {
-                    return $user->roles->contains(function ($role) use ($permission) {
-                        return $role->permissions->contains('title', $permission->title);
-                    });
-                });
-            }
-        }
+        // foreach ($features as $feature) {
+        //     foreach ($feature->permissions as $permission) {
+        //         Gate::define($permission->title, function ($user) use ($permission) {
+        //             return $user->roles->contains(function ($role) use ($permission) {
+        //                 return $role->permissions->contains('title', $permission->title);
+        //             });
+        //         });
+        //     }
+        // }
     }
 
 }

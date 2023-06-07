@@ -12,7 +12,6 @@ class ChangePasswordController extends Controller
 {
     public function edit()
     {
-        abort_if(Gate::denies('edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         return view('auth.passwords.edit');
     }

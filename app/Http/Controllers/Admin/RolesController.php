@@ -17,22 +17,25 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RolesController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('canView:role')->only(['index','show']);
+        $this->middleware('canCreate:role')->only(['create','store']);
+        $this->middleware('canUpdate:role')->only(['edit','update']);
+        $this->middleware('canDelete:role')->only(['destroy','massDestroy']);
+    }
+
     public function index()
     {
-        abort_if(Gate::denies('access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $roles = Role::all();
         return view('admin.roles.index', compact('roles'));   
 
     }
 
-    
-
-   
 
     public function create()
     {
-        abort_if(Gate::denies('create'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $features = Feature::all();
         $permissions = Permission::all();
@@ -51,7 +54,6 @@ class RolesController extends Controller
 
     public function edit(Role $role)
     {
-        abort_if(Gate::denies('edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $features = Feature::all();
         $permissions = Permission::findOrFail($role->id)->get();
@@ -61,16 +63,14 @@ class RolesController extends Controller
 
     public function update(UpdateRoleRequest $request,Role $role)
     {      
-            $role->update($request->all());
-            $role->permissions()->sync($request->input('permissions', []));
+        $role->update($request->all());
+        $role->permissions()->sync($request->input('permissions', []));
 
-            return redirect()->route('admin.roles.index');
+        return redirect()->route('admin.roles.index');
     }
 
     public function show(Role $role)
     {
-        abort_if(Gate::denies('show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $role->load('permissions');
 
         return view('admin.roles.show', compact('role'));
@@ -78,17 +78,16 @@ class RolesController extends Controller
 
     public function destroy(Role $role)
     {
-        abort_if(Gate::denies('delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
         $role->delete();
-
         return back();
     }
 
     public function massDestroy(MassDestroyRoleRequest $request)
     {
         Role::whereIn('id', request('ids'))->delete();
-
-        return response(null, Response::HTTP_NO_CONTENT);
+        // return response(null, Response::HTTP_NO_CONTENT);
     }
 }
+
+
+

@@ -28,7 +28,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Http\Middleware\AuthGates::class,
+            // \App\Http\Middleware\AuthGates::class,
             \App\Http\Middleware\SetLocale::class,
         ],
     ];
@@ -43,5 +43,9 @@ class Kernel extends HttpKernel
         'signed'           => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle'         => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
+        'canView' => \App\Http\Middleware\canView::class,
+        'canCreate' => \App\Http\Middleware\canCreate::class,
+        'canUpdate' => \App\Http\Middleware\canUpdate::class,
+        'canDelete' => \App\Http\Middleware\canDelete::class,
     ];
 }

@@ -10,27 +10,37 @@ Route::get('/home', function () {
 
 Auth::routes(['register' => false]);
 
-# Admin
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {
-    Route::get('/', '\App\Http\Controllers\Admin\HomeController@index')->name('home');
+
+    #Admin
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => '\App\Http\Controllers\Admin', 'middleware' => ['auth']], function () {
+
+    Route::get('/', 'HomeController@index')->name('home');
 
     # Permissions
-    Route::delete('permissions/destroy', 'App\Http\Controllers\Admin\PermissionsController@massDestroy')->name('permissions.massDestroy');
-    Route::resource('permissions', '\App\Http\Controllers\Admin\PermissionsController');
+        Route::delete('permissions/destroy', 'PermissionsController@massDestroy')->name('permissions.massDestroy');
+        Route::resource('permissions', 'PermissionsController')->except(['index', 'create', 'store']);
+  
 
     # Roles
-    Route::delete('roles/destroy', '\App\Http\Controllers\Admin\RolesController@massDestroy')->name('roles.massDestroy');
-    Route::resource('roles', '\App\Http\Controllers\Admin\RolesController');
+        // Route::group(['middleware' => ['canView:role','canCreate:role','canUpdate:role','canDelete:role']], function () {
+            Route::delete('roles/destroy', 'RolesController@massDestroy')->name('roles.massDestroy');
+            Route::resource('roles', 'RolesController');
+        // });
 
-    # Users
-    Route::delete('users/destroy', '\App\Http\Controllers\Admin\UsersController@massDestroy')->name('users.massDestroy');
-    Route::resource('users', '\App\Http\Controllers\Admin\UsersController');
-
+     # Users
+        // Route::group(['middleware' => ['canView:user','canCreate:user','canUpdate:user','canDelete:user']], function () {
+            Route::delete('users/destroy', 'UsersController@massDestroy')->name('users.massDestroy');
+            Route::resource('users', 'UsersController');
+        // });
+    
     # Features
-    Route::delete('features/destroy', '\App\Http\Controllers\Admin\FeaturesController@massDestroy')->name('features.massDestroy');
-    Route::resource('features', '\App\Http\Controllers\Admin\FeaturesController');
-
+        Route::delete('features/destroy', 'FeaturesController@massDestroy')->name('features.massDestroy');
+        Route::resource('features', 'FeaturesController')->except(['index', 'create', 'store']);
 });
+
+
+
+
 
 Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'App\Http\Controllers\Auth', 'middleware' => ['auth']], function () {
     # Change password

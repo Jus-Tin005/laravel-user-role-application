@@ -1,12 +1,22 @@
 @extends('layouts.admin')
 @section('content')
-@can('create')
-    <div class="block my-4">
-        <a class="btn-md btn-green" href="{{ route('admin.users.create') }}">
-            {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
-        </a>
-    </div>
-@endcan
+
+@php
+    use App\Helpers\CheckPermissionHelpers;
+    $permissionHelper = new CheckPermissionHelpers();
+@endphp
+
+@if ($permissionHelper->customCreate('user'))
+        <div class="block my-4">
+            <a class="btn-md btn-green" href="{{ route('admin.users.create') }}">
+                {{ trans('global.add') }} {{ trans('cruds.user.title_singular') }}
+            </a>
+        </div>
+@endif
+
+    
+        
+    
 <div class="main-card">
     <div class="header">
         {{ trans('cruds.user.title_singular') }} {{ trans('global.list') }}
@@ -64,28 +74,24 @@
                                 @endforeach
                             </td>
                             <td>
-                                @can('show')
+                                @if ($permissionHelper->customShow('user'))
                                     <a class="btn-sm btn-indigo" href="{{ route('admin.users.show', $user->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
-                                @endcan
-
-                                @can('edit')
+                                @endif
+                                @if ($permissionHelper->customEdit('user'))
                                     <a class="btn-sm btn-blue" href="{{ route('admin.users.edit', $user->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
-                                @endcan
-
-                                @can('delete')
+                                @endif
+                                @if ($permissionHelper->customDelete('user'))
                                     <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn-sm btn-red" value="{{ trans('global.delete') }}">
                                     </form>
-                                @endcan
-
+                                @endif
                             </td>
-
                         </tr>
                     @endforeach
                 </tbody>

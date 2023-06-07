@@ -28,8 +28,6 @@ class Permission extends Model
         return $this->belongsTo(Feature::class);
     }
 
-    // public function hasFeature($feature){
-    //     return $this->feature->contains('name',$feature);
-    // }
+
 
 }

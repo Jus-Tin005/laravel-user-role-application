@@ -1,12 +1,18 @@
 @extends('layouts.admin')
 @section('content')
-@can('create')
+
+@php
+    use App\Helpers\CheckPermissionHelpers;
+    $permissionHelper = new CheckPermissionHelpers();
+@endphp
+
+@if ($permissionHelper->customCreate('role'))
     <div class="block my-4">
         <a class="btn-md btn-green" href="{{ route('admin.roles.create') }}">
             {{ trans('global.add') }} {{ trans('cruds.role.title_singular') }}
         </a>
     </div>
-@endcan
+@endif
 <div class="main-card">
     <div class="header">
         {{ trans('cruds.role.title_singular') }} {{ trans('global.list') }}
@@ -45,26 +51,23 @@
                             </td>
                            
                             <td  style="padding-left:36.5em;">
-                                @can('show')
+                                @if ($permissionHelper->customShow('role'))
                                     <a class="btn-sm btn-indigo" href="{{ route('admin.roles.show', $role->id) }}">
                                         {{ trans('global.view') }}
                                     </a>
-                                @endcan
-
-                                @can('edit')
+                                @endif
+                                @if ($permissionHelper->customEdit('role'))
                                     <a class="btn-sm btn-blue" href="{{ route('admin.roles.edit', $role->id) }}">
                                         {{ trans('global.edit') }}
                                     </a>
-                                @endcan
-
-                                @can('delete')
+                                @endif
+                                @if ($permissionHelper->customDelete('role'))
                                     <form action="{{ route('admin.roles.destroy', $role->id) }}" method="POST" onsubmit="return confirm('{{ trans('global.areYouSure') }}');" style="display: inline-block;">
                                         <input type="hidden" name="_method" value="DELETE">
                                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         <input type="submit" class="btn-sm btn-red" value="{{ trans('global.delete') }}">
                                     </form>
-                                @endcan
-
+                                @endif        
                             </td>
 
                         </tr>

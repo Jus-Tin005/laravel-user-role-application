@@ -17,31 +17,31 @@ class UsersSeeder extends Seeder
     public function run(){
 
             $users = [
-                    [
-                        'name'           => 'khuntun',
-                        'email'          => 'khuntun984@gmail.com',
-                        'password'       => bcrypt('khuntun984'),
-                        'remember_token' => null,
-                    ],
-                    [
-                        'name'           => 'Eh Hlaing',
-                        'email'          => 'hlaing777@gmail.com',
-                        'password'       => bcrypt('hlaing777'),
-                        'remember_token' => null,
-                    ],
-                    [
-                        'name'           => 'Htet Htet',
-                        'email'          => 'htet2023@gmail.com',
-                        'password'       => bcrypt('htet2023'),
-                        'remember_token' => null,
-                    ],
+                                [
+                                    'name'           => 'khuntun',
+                                    'email'          => 'khuntun984@gmail.com',
+                                    'password'       => bcrypt('khuntun984'),
+                                    'remember_token' => null,
+                                ],
+                                [
+                                    'name'           => 'Eh Hlaing',
+                                    'email'          => 'hlaing777@gmail.com',
+                                    'password'       => bcrypt('hlaing777'),
+                                    'remember_token' => null,
+                                ],
+                                [
+                                    'name'           => 'Htet Htet',
+                                    'email'          => 'htet2023@gmail.com',
+                                    'password'       => bcrypt('htet2023'),
+                                    'remember_token' => null,
+                                ],
             ];
 
-            foreach($users as $user){
-                User::create([
-                    'name' => $user['name'],
-                    'email' => $user['email'],
-                    'password' => $user['password'],
+            foreach($users as $key => $user){
+                User::create([                  
+                        'name' => $user['name'],
+                        'email' => $user['email'],
+                        'password' => $user['password'],
                 ]);
             }
      }
