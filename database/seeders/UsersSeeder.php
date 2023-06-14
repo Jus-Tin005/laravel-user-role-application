@@ -21,18 +21,21 @@ class UsersSeeder extends Seeder
                                     'name'           => 'khuntun',
                                     'email'          => 'khuntun984@gmail.com',
                                     'password'       => bcrypt('khuntun984'),
+                                    'role_id'        => 1,
                                     'remember_token' => null,
                                 ],
                                 [
                                     'name'           => 'Eh Hlaing',
                                     'email'          => 'hlaing777@gmail.com',
                                     'password'       => bcrypt('hlaing777'),
+                                    'role_id'        => 2,
                                     'remember_token' => null,
                                 ],
                                 [
                                     'name'           => 'Htet Htet',
                                     'email'          => 'htet2023@gmail.com',
                                     'password'       => bcrypt('htet2023'),
+                                    'role_id'        => 3,
                                     'remember_token' => null,
                                 ],
             ];
@@ -42,6 +45,7 @@ class UsersSeeder extends Seeder
                         'name' => $user['name'],
                         'email' => $user['email'],
                         'password' => $user['password'],
+                        'role_id' => $user['role_id'],
                 ]);
             }
      }

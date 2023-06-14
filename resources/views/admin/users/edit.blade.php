@@ -44,8 +44,8 @@
             </div>
             <div class="mb-3">
                 <label>{{ trans('cruds.user.fields.roles') }} <label class="text-xs required"></label><br>
-                    @foreach($roles as $id => $roles)
-                        <input type="radio" name="roles[]" value="{{ $id }}" id="roles" class="form-control {{ $errors->has('roles') ? ' is-invalid' : '' }}" {{ (in_array($id, old('roles', [])) || $user->roles->contains($id)) ? 'checked' : '' }}> {{ $roles }} &nbsp;&nbsp;
+                    @foreach($roles as $id => $role)
+                        <input type="radio" name="roles[]" value="{{ $id }}" id="roles" class="form-control {{ $errors->has('roles') ? ' is-invalid' : '' }}" {{ (in_array($id, old('roles', [])) || $user->roles->pluck('id')->contains($id)) ? 'checked' : '' }}> {{ $role }} &nbsp;&nbsp;
                     @endforeach
                 </label>
                 @if($errors->has('roles'))
@@ -53,6 +53,7 @@
                 @endif
                 <span class="block">{{ trans('cruds.user.fields.roles_helper') }}</span>
             </div>
+
         </div>
 
         <div class="footer">

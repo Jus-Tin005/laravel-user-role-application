@@ -69,9 +69,7 @@
                                 {{ $user->email_verified_at ?? '' }}
                             </td>
                             <td>
-                                @foreach($user->roles as $key => $item)
-                                    <span class="badge blue">{{ $item->name }}</span>
-                                @endforeach
+                               <span class="badge blue">{{ $user->roles->name }}</span>
                             </td>
                             <td>
                                 @if ($permissionHelper->customShow('user'))

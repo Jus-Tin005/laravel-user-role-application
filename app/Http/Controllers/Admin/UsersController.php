@@ -27,15 +27,14 @@ class UsersController extends Controller
 
 
     public function index(){
-
-        $users = User::all();
+        // $users = User::all();
+        $users = User::with('roles')->get();
         return view('admin.users.index', compact('users'));  
     }
 
 
     public function create()
     {
-    
         $roles = Role::all()->pluck('name', 'id');
         return view('admin.users.create', compact('roles'));
     }
@@ -43,11 +42,17 @@ class UsersController extends Controller
     public function store(StoreUserRequest $request)
     {
         $user = User::create($request->all());
-        $user->roles()->sync($request->input('roles', []));
-
+        $roleIDs = $request->input('roles', []);
+        
+        if (!empty($roleIDs)) {
+            $roleID = $roleIDs[0]; 
+            $user->role_id = $roleID;
+            $user->save();
+        }
+    
         return redirect()->route('admin.users.index');
     }
-
+    
     public function edit(User $user)
     {
         $roles = Role::all()->pluck('name', 'id');
@@ -60,15 +65,19 @@ class UsersController extends Controller
     public function update(UpdateUserRequest $request, User $user)
     {
         $user->update($request->all());
-        $user->roles()->sync($request->input('roles', []));
+        $roleIDs = $request->input('roles', []);
+        
+        if (!empty($roleIDs)) {
+            $roleID = $roleIDs[0]; 
+            $user->role_id = $roleID;
+            $user->save();
+        }
 
         return redirect()->route('admin.users.index');
     }
 
     public function show(User $user)
     {
-  
-
         $user->load('roles');
 
         return view('admin.users.show', compact('user'));
@@ -76,16 +85,14 @@ class UsersController extends Controller
 
     public function destroy(User $user)
     {
-
-        $user->delete();
+        // $user->delete();
+        $user->forceDelete();
 
         return back();
     }
 
     public function massDestroy(MassDestroyUserRequest $request)
     {
-        User::whereIn('id', request('ids'))->delete();
-
-        // return response(null, Response::HTTP_NO_CONTENT);
+        User::whereIn('id', $request->input('ids'))->delete();
     }
 }

@@ -50,9 +50,7 @@
                         {{ trans('cruds.user.fields.roles') }}
                     </th>
                     <td>
-                        @foreach($user->roles as $key => $roles)
-                            <span class="label label-info">{{ $roles->name }}</span>
-                        @endforeach
+                            <span class="label label-info">{{ $user->roles->name }}</span>
                     </td>
                 </tr>
             </tbody>
