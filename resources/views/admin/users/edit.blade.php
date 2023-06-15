@@ -7,7 +7,7 @@
 
     <form method="POST" action="{{ route('admin.users.update', [$user->id]) }}" enctype="multipart/form-data">
         @method('PUT')
-        @csrf
+        @csrf   
         <div class="body">
             <div class="mb-3">
                 <label for="name" class="text-xs required">{{ trans('cruds.user.fields.name') }}</label>
@@ -44,8 +44,9 @@
             </div>
             <div class="mb-3">
                 <label>{{ trans('cruds.user.fields.roles') }} <label class="text-xs required"></label><br>
-                    @foreach($roles as $id => $role)
-                        <input type="radio" name="roles[]" value="{{ $id }}" id="roles" class="form-control {{ $errors->has('roles') ? ' is-invalid' : '' }}" {{ (in_array($id, old('roles', [])) || $user->roles->pluck('id')->contains($id)) ? 'checked' : '' }}> {{ $role }} &nbsp;&nbsp;
+                    @foreach($roles as $roleId => $roleName)
+                        <input type="radio" name="roles[]" value="{{ $roleId }}" id="role_{{ $roleId }}" class="form-control role-checkbox {{ $errors->has('roles') ? ' is-invalid' : '' }}"  {{ (in_array($user->roles->id, old('roles', [])) || $user->roles->id === $roleId) ? 'checked' : '' }}>
+                        <label for="role_{{ $roleId }}">{{ $roleName }}</label> &nbsp;&nbsp;
                     @endforeach
                 </label>
                 @if($errors->has('roles'))
@@ -61,4 +62,5 @@
         </div>
     </form>
 </div>
+
 @endsection

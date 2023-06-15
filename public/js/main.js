@@ -83,4 +83,14 @@ $('button.sidebar-toggler').click(function () {
     $('.dropdown-items .active').parents('.nav-dropdown').click();
   }
 
-})
+
+
+  // Role Edit Box
+  // $('.role-checkbox').on('change',function(){
+  //   $('.role-checkbox').not(this).prop('checked',false);
+  // });
+
+});
+
+
+
